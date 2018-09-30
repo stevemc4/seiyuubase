@@ -1,0 +1,23 @@
+@tailwind preflight;
+@tailwind components;
+@tailwind utilities;
+
+body
+{
+    @apply bg-grey-lightest
+}
+
+.md-renderer
+{
+    @apply font-normal text-grey-darker;
+}
+
+.md-renderer strong
+{
+    @apply text-purple-darkest
+}
+
+.md-renderer a
+{
+    @apply no-underline text-purple-dark
+}
