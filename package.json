@@ -12,7 +12,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "graphql-request": "^1.8.2",
-    "musicbrainz": "^0.2.6",
     "nodebrainz": "^2.1.1",
     "vue": "^2.5.2",
     "vue-markdown": "^2.2.4",
