@@ -87,88 +87,101 @@ export default {
       notFound: false
     } 
   },
-  async created() {
-    let query = `
-        query ($name: String){
-            Staff(search: $name, sort: FAVOURITES_DESC) {
-                name {
-                first
-                last
-                native
-                }
-                image {
-                medium
-                }
-                description
-                characters(sort: FAVOURITES_DESC, perPage: 24) {
-                edges {
-                    id
-                    media {
-                    title {
-                        english
-                        romaji
-                        native
-                    }
-                    season
-                    startDate {
-                        year
-                    }
-                    coverImage {
-                        medium
-                    }
-                    siteUrl
-                    format
-                    }
-                    node {
-                    name {
-                        first
-                        last
-                    }
-                    siteUrl
-                    }
-                }
-                }
-            }
-        }` 
-    try {
-      let result = await client.request(query, {
-        name: this.$route.params.name
-      }) 
-      let characters = [] 
-      result.Staff.characters.edges.forEach(e => {
-        e.media.forEach(m => {
-          let item = {
-            id: m.id,
-            title: m.title,
-            year: m.startDate.year,
-            siteUrl: m.siteUrl,
-            season: m.season,
-            coverImage: m.coverImage.medium,
-            as: {
-              name: e.node.name,
-              siteUrl: e.node.siteUrl
-            }
-          } 
-          if (m.format == "TV" || m.format == "MOVIE" || m.format == "TV_SHORT")
-            characters.push(item) 
-        }) 
-      }) 
-      let data = {
-        name: result.Staff.name,
-        description: result.Staff.description,
-        image: result.Staff.image.medium,
-        characters
-      } 
-      this.info = data 
-      document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
-      this.loadDiscogs(this.info.name.native) 
-    } catch (e) {
-      console.log(e)
-      this.notFound = true
-    }
+  watch: {
+      $route (from, to)
+      {
+        this.info = {}
+        this.discography = {}
+        this.isDiscogsLoaded = false
+        this.notFound = false
+        this.loadData()
+      }
+  },
+  created() {
+    this.loadData()
   },
   mounted() {},
   methods: {
+    async loadData(){
+        let query = `
+            query ($name: String){
+                Staff(search: $name, sort: FAVOURITES_DESC) {
+                    name {
+                    first
+                    last
+                    native
+                    }
+                    image {
+                    medium
+                    }
+                    description
+                    characters(sort: FAVOURITES_DESC, perPage: 24) {
+                    edges {
+                        id
+                        media {
+                        title {
+                            english
+                            romaji
+                            native
+                        }
+                        season
+                        startDate {
+                            year
+                        }
+                        coverImage {
+                            medium
+                        }
+                        siteUrl
+                        format
+                        }
+                        node {
+                        name {
+                            first
+                            last
+                        }
+                        siteUrl
+                        }
+                    }
+                    }
+                }
+            }` 
+        try {
+        let result = await client.request(query, {
+            name: this.$route.params.name
+        }) 
+        let characters = [] 
+        result.Staff.characters.edges.forEach(e => {
+            e.media.forEach(m => {
+            let item = {
+                id: m.id,
+                title: m.title,
+                year: m.startDate.year,
+                siteUrl: m.siteUrl,
+                season: m.season,
+                coverImage: m.coverImage.medium,
+                as: {
+                name: e.node.name,
+                siteUrl: e.node.siteUrl
+                }
+            } 
+            if (m.format == "TV" || m.format == "MOVIE" || m.format == "TV_SHORT")
+                characters.push(item) 
+            }) 
+        }) 
+        let data = {
+            name: result.Staff.name,
+            description: result.Staff.description,
+            image: result.Staff.image.medium,
+            characters
+        } 
+        this.info = data 
+        document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
+        this.loadDiscogs(this.info.name.native) 
+        } catch (e) {
+        console.log(e)
+        this.notFound = true
+        }
+    },
     loadDiscogs(name) {
       if (!this.isDiscogsLoaded) {
         let a = this 
