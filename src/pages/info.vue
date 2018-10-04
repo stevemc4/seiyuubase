@@ -1,17 +1,17 @@
 <template>
     <div class="p-8">
         <div v-if="(info.name != undefined)">
-            <div class="flex">
-                <img class="w-24 h-24 rounded-full" style="object-fit: cover" :src="info.image"/>
-                <div class="ml-4">
-                    <h1 class="font-normal text-3xl text-grey-darkest">{{`${info.name.first} ${info.name.last}`}}</h1>
-                    <span class="block font-normal text-lg text-grey-dark">{{info.name.native}}</span>
+            <div class="flex flex-col md:flex-row">
+                <img class="w-24 h-24 rounded-full table mx-auto md:inline-block md:mx-0" style="object-fit: cover" :src="info.image"/>
+                <div class="mt-2 md:mt-0 md:ml-4 table mx-auto md:inline-block md:mx-0">
+                    <h1 class="text-center md:text-left font-normal text-3xl text-grey-darkest">{{`${info.name.first} ${info.name.last}`}}</h1>
+                    <span class="text-center md:text-left block font-normal text-lg text-grey-dark">{{info.name.native}}</span>
                     <md class="mt-2 md-renderer">{{info.description}}</md>
                 </div>
             </div>
             <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
             <ul class="list-reset flex flex-wrap -ml-2">
-                <li class="w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in info.characters" :key="item.id">
+                <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in info.characters" :key="item.id">
                 <div class="bg-transparent shadow rounded-lg flex h-32">
                     <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.coverImage"/>
                     <div class="bg-white relative p-4 w-full rounded-tr-lg rounded-br-lg">
