@@ -7,28 +7,47 @@ import Changelog from '@/pages/changelog'
 
 Vue.use(Router)
 
-export default new Router({
+var router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: Index,
+      meta: {
+        title: "A Site For Your Seiyuu Needs!"
+      }
     },
     {
       path: '/info/:name',
       name: 'Info',
-      component: InfoPage
+      component: InfoPage,
+      meta: {
+        title: "Loading..."
+      }
     },
     {
       path: '/about',
       name: 'About',
-      component: About
+      component: About,
+      meta: {
+        title: "About SeiyuuBase"
+      }
     },
     {
       path: '/changelog',
       name: 'Changelog',
-      component: Changelog
+      component: Changelog,
+      meta: {
+        title: "Changelog"
+      }
     }
   ]
 })
+
+router.beforeEach((from, to, next) => {
+  document.title = from.meta.title + " - SeiyuuBase"
+  next()
+})
+
+export default router

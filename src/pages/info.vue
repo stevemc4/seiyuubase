@@ -157,6 +157,7 @@ export default {
         characters
       } 
       this.info = data 
+      document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
       this.loadDiscogs(this.info.name.native) 
     } catch (e) {
       console.log(e)
