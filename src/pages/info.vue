@@ -156,7 +156,6 @@ export default {
         image: result.Staff.image.medium,
         characters
       } 
-      console.log(data) 
       this.info = data 
       this.loadDiscogs(this.info.name.native) 
     } catch (e) {
