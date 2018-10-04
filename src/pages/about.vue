@@ -21,38 +21,5 @@ export default {
 </script>
 
 <style>
-    .mdr h1, .mdr h2, .mdr h3, .mdr h4, .mdr h5, .mdr h6
-    {
-        @apply my-4 text-grey-darkest font-normal
-    }
-    .mdr ul li{
-        @apply text-grey-darkest font-normal
-    }
-    .mdr h1{
-      @apply text-3xl font-bold
-    }
-    .mdr blockquote
-    {
-        @apply bg-grey-light border-l-2 border-purple text-black p-2 my-2
-    }
-    .mdr blockquote p
-    {
-        @apply text-black
-    }
-    .mdr p
-    {
-        @apply text-grey-darkest my-2
-    }
-    .mdr a
-    {
-        @apply no-underline text-purple-dark
-    }
-    .mdr pre
-    {
-        @apply p-4 rounded-lg bg-grey-darkest text-white
-    }
-    .mdr pre code
-    {
-        @apply font-normal
-    }
+    
 </style>
