@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '@/pages/index'
 import InfoPage from '@/pages/info'
 import About from '@/pages/about'
+import Changelog from '@/pages/changelog'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/about',
       name: 'About',
       component: About
+    },
+    {
+      path: '/changelog',
+      name: 'Changelog',
+      component: Changelog
     }
   ]
 })
