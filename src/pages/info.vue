@@ -2,22 +2,22 @@
     <div class="p-8">
         <div v-if="(info.name != undefined)">
             <div class="flex">
-                <img class="w-24 h-24 rounded-full" style="object-fit: cover" :src="info.image.medium"/>
+                <img class="w-24 h-24 rounded-full" style="object-fit: cover" :src="info.image"/>
                 <div class="ml-4">
                     <h1 class="font-normal text-3xl text-grey-darkest">{{`${info.name.first} ${info.name.last}`}}</h1>
                     <span class="block font-normal text-lg text-grey-dark">{{info.name.native}}</span>
                     <md class="mt-2 md-renderer">{{info.description}}</md>
                 </div>
             </div>
-            <span class="block font-normal text-grey-darkest text-2xl my-4">Appears In</span>
+            <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
             <ul class="list-reset flex flex-wrap -ml-2">
-                <li class="w-1/3 p-2" v-if="item.node.media.nodes[0].title.english != undefined || item.node.media.nodes[0].title.romaji != undefined || item.node.media.nodes[0].title.native != undefined" v-for="item in info.characters.edges" :key="item.id">
+                <li class="w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in info.characters" :key="item.id">
                 <div class="bg-transparent shadow rounded-lg flex h-32">
-                    <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.node.media.nodes[0].coverImage.medium"/>
+                    <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.coverImage"/>
                     <div class="bg-white relative p-4 w-full rounded-tr-lg rounded-br-lg">
-                        <a target="_blank" :href="item.node.media.nodes[0].siteUrl" class="block no-underline font-bold text-base text-grey-darkest">{{item.node.media.nodes[0].title.english || item.node.media.nodes[0].title.romaji || item.node.media.nodes[0].title.native}}</a>
-                        <span class="block font-normal text-sm mt-1 text-grey-darker">As <a :href="item.node.siteUrl" target="_blank" class="no-underline font-bold text-grey-darkest">{{item.node.name.first}} {{item.node.name.last}}</a></span>
-                        <span class="block font-normal text-xs absolute pin-b mb-2 text-grey-dark">{{item.node.media.nodes[0].season}} {{item.node.media.nodes[0].startDate.year}}</span>
+                        <a target="_blank" :href="item.siteUrl" class="block no-underline font-bold text-base text-grey-darkest">{{item.title.english || item.title.romaji || item.title.native}}</a>
+                        <span class="block font-normal text-sm mt-1 text-grey-darker">As <a :href="item.as.siteUrl" target="_blank" class="no-underline font-bold text-grey-darkest">{{item.as.name.first}} {{item.as.name.last}}</a></span>
+                        <span class="block font-normal text-xs absolute pin-b mb-2 text-grey-dark">{{item.season}} {{item.year}}</span>
                     </div>
                 </div>
                 </li>
@@ -66,99 +66,131 @@
 </template>
 
 <script>
-import { GraphQLClient } from "graphql-request";
-import nodebrainz from "nodebrainz";
-import md from "vue-markdown";
-var client = new GraphQLClient("https://graphql.anilist.co");
-var mb = new nodebrainz({userAgent: 'seiyuubase/0.0.1'})
+import { GraphQLClient } from "graphql-request" 
+import nodebrainz from "nodebrainz" 
+import md from "vue-markdown" 
+var client = new GraphQLClient("https://graphql.anilist.co") 
+var mb = new nodebrainz({ userAgent: "seiyuubase/0.0.1" }) 
 export default {
   components: { md },
   data() {
     return {
       info: {},
       discography: {
-          albums: [],
-          singles: []
+        albums: [],
+        singles: []
       },
       isDiscogsLoaded: false,
       notFound: false
-    };
+    } 
   },
   async created() {
     let query = `
         query ($name: String){
-            Staff(search: $name)
-            {
-                name{
-                    first
-                    last
-                    native
+            Staff(search: $name, sort: FAVOURITES_DESC) {
+                name {
+                first
+                last
+                native
                 }
-                image{
-                    medium
+                image {
+                medium
                 }
                 description
-                characters(sort: FAVOURITES_DESC, perPage: 24){
-                    edges{
-                        id
-                        node{
-                            name{
-                                first
-                                last
-                            }
-                            siteUrl
-                            media(type: ANIME){
-                                nodes{
-                                    title{
-                                        english
-                                        romaji
-                                        native
-                                    }
-                                    season
-                                    startDate{
-                                        year
-                                    }
-                                    coverImage{
-                                        medium
-                                    }
-                                    siteUrl
-                                }
-                            }
-                        }
+                characters(sort: FAVOURITES_DESC, perPage: 24) {
+                edges {
+                    id
+                    media {
+                    title {
+                        english
+                        romaji
+                        native
+                    }
+                    season
+                    startDate {
+                        year
+                    }
+                    coverImage {
+                        medium
+                    }
+                    siteUrl
+                    format
+                    }
+                    node {
+                    name {
+                        first
+                        last
+                    }
+                    siteUrl
                     }
                 }
+                }
             }
-        }`;
+        }` 
     try {
       let result = await client.request(query, {
         name: this.$route.params.name
-      });
-      this.info = result.Staff;
-      this.loadDiscogs(this.info.name.native)
+      }) 
+      let characters = [] 
+      result.Staff.characters.edges.forEach(e => {
+        e.media.forEach(m => {
+          let item = {
+            id: m.id,
+            title: m.title,
+            year: m.startDate.year,
+            siteUrl: m.siteUrl,
+            season: m.season,
+            coverImage: m.coverImage.medium,
+            as: {
+              name: e.node.name,
+              siteUrl: e.node.siteUrl
+            }
+          } 
+          if (m.format == "TV" || m.format == "MOVIE" || m.format == "TV_SHORT")
+            characters.push(item) 
+        }) 
+      }) 
+      let data = {
+        name: result.Staff.name,
+        description: result.Staff.description,
+        image: result.Staff.image.medium,
+        characters
+      } 
+      console.log(data) 
+      this.info = data 
+      this.loadDiscogs(this.info.name.native) 
     } catch (e) {
-      this.notFound = true;
+      console.log(e)
+      this.notFound = true
     }
-    
   },
   mounted() {},
   methods: {
     loadDiscogs(name) {
       if (!this.isDiscogsLoaded) {
-        let a = this;
-        mb.search('artist', {artist: name, country: 'JP'}, (err, res) => {
-            var id = res.artists[0].id
-            mb.search('release-group', {arid: id, artist: res.artists[0].name, primarytype: 'album'}, (err, res) => {
-                a.discography.albums = res['release-groups']
-            })
-            mb.search('release-group', {arid: id, primarytype: 'single', limit: 100}, (err, res) => {
-                a.discography.singles = res['release-groups']
-            })
-        })
-        this.isDiscogsLoaded = true;
+        let a = this 
+        mb.search("artist", { artist: name, country: "JP" }, (err, res) => {
+          var id = res.artists[0].id 
+          mb.search(
+            "release-group",
+            { arid: id, artist: res.artists[0].name, primarytype: "album" },
+            (err, res) => {
+              a.discography.albums = res["release-groups"] 
+            }
+          ) 
+          mb.search(
+            "release-group",
+            { arid: id, primarytype: "single", limit: 100 },
+            (err, res) => {
+              a.discography.singles = res["release-groups"] 
+            }
+          ) 
+        }) 
+        this.isDiscogsLoaded = true 
       }
     }
   }
-};
+} 
 </script>
 
 <style>
