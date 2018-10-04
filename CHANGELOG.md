@@ -8,6 +8,7 @@ Dates are written in UTC+7 (Jakarta & Bangkok)
 * Making "Changelog" link in navigation bar functional
 * Added page title
 * Now the site is mobile-friendly :)
+* Added search bar in navigation bar
 
 ## 2018/09/30
 * Initial Commit 🎉
