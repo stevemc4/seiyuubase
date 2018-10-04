@@ -70,7 +70,10 @@ import { GraphQLClient } from "graphql-request"
 import nodebrainz from "nodebrainz" 
 import md from "vue-markdown" 
 var client = new GraphQLClient("https://graphql.anilist.co") 
-var mb = new nodebrainz({ userAgent: "seiyuubase/0.0.1" }) 
+var mb = new nodebrainz({
+     userAgent: "seiyuubase/0.0.1" ,
+     port: 443
+     }) 
 export default {
   components: { md },
   data() {
