@@ -1,5 +1,5 @@
 <template>
-    <nav class="w-full h-16 p-8 bg-white shadow border-t-4 border-purple flex items-center">
+    <nav class="fixed pin-t z-20 w-full h-16 p-8 bg-white shadow border-t-4 border-purple flex items-center">
         <span class="text-xl font-normal text-grey-darkest flex-grow">SeiyuuBase</span>
         <ul class="list-reset font-normal text-base flex">
             <li><router-link :to="'/'" class="p-2 no-underline text-grey-dark hover:text-purple-dark">Home</router-link></li>
