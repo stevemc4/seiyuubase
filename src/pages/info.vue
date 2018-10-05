@@ -12,14 +12,14 @@
             <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
             <ul class="list-reset flex flex-wrap -ml-2">
                 <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in info.characters" :key="item.id">
-                <div class="bg-transparent shadow rounded-lg flex h-32">
-                    <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.coverImage"/>
-                    <div class="bg-white relative p-4 w-full rounded-tr-lg rounded-br-lg">
-                        <a target="_blank" :href="item.siteUrl" class="block no-underline font-bold text-base text-grey-darkest">{{item.title.english || item.title.romaji || item.title.native}}</a>
-                        <span class="block font-normal text-sm mt-1 text-grey-darker">as <a :href="item.as.siteUrl" target="_blank" class="no-underline font-bold text-grey-darkest">{{item.as.name.first}} {{item.as.name.last}}</a></span>
-                        <span class="block font-normal text-xs absolute pin-b mb-2 text-grey-dark">{{item.season}} {{item.year}}</span>
+                    <div class="bg-transparent shadow rounded-lg flex h-32">
+                        <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.coverImage"/>
+                        <div class="bg-white relative p-4 w-full rounded-tr-lg rounded-br-lg">
+                            <a target="_blank" :href="item.siteUrl" class="block no-underline font-bold text-base text-grey-darkest">{{item.title.english || item.title.romaji || item.title.native}}</a>
+                            <span class="block font-normal text-sm mt-1 text-grey-darker">as <a :href="item.as.siteUrl" target="_blank" class="no-underline font-bold text-grey-darkest">{{item.as.name.first}} {{item.as.name.last}}</a></span>
+                            <span class="block font-normal text-xs absolute pin-b mb-2 text-grey-dark">{{item.season}} {{item.year}}</span>
+                        </div>
                     </div>
-                </div>
                 </li>
             </ul>
             <span class="block font-normal text-grey-darkest text-2xl my-4">Discography</span>
