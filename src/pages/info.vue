@@ -90,10 +90,6 @@ export default {
   watch: {
       $route (from, to)
       {
-        this.info = {}
-        this.discography = {}
-        this.isDiscogsLoaded = false
-        this.notFound = false
         this.loadData()
       }
   },
