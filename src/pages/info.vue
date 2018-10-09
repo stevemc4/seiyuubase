@@ -6,7 +6,7 @@
                 <div class="mt-2 md:mt-0 md:ml-4 table mx-auto md:inline-block md:mx-0">
                     <h1 class="text-center md:text-left font-normal text-3xl text-grey-darkest">{{`${info.name.first} ${info.name.last}`}}</h1>
                     <span class="text-center md:text-left block font-normal text-lg text-grey-dark">{{info.name.native}}</span>
-                    <md class="mt-2 md-renderer">{{info.description}}</md>
+                    <md :source="info.description" class="mt-2 md-renderer"/>
                 </div>
             </div>
             <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
