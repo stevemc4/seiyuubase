@@ -2,6 +2,11 @@
 
 > A site for your _seiyuu_ needs!
 
+[![forthebadge](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/check-it-out.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](https://forthebadge.com)
+
 SeiyuuBase is a site focused on Japanese voice actors and actresses (_声優_ _seiyuu_)
 
 ## Motivation
