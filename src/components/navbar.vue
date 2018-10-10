@@ -17,6 +17,9 @@
 
 <script>
 export default {
+    created(){
+        this.$root.$on('changeSearch', this.onChangeSearch)
+    },
     data(){
         return{
             query: ""
@@ -26,6 +29,10 @@ export default {
         find()
         {
             this.$router.push(`/info/${this.query}`)
+        },
+        onChangeSearch(e)
+        {
+            this.query = e
         }
     }
 }

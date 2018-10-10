@@ -26,6 +26,7 @@ export default {
   methods: {
     find()
     {
+      this.$root.$emit('changeSearch', this.query)
       this.$router.push(`/info/${this.query}`)
     }
   }
