@@ -3,7 +3,7 @@
         <span class="flex-grow lg:flex-no-grow text-lg font-normal text-grey-darkest">SeiyuuBase</span>
         <div class="hidden ml-4 h-8 flex-grow lg:flex items-center px-4 border-l border-grey-dark">
             <span class="material-icons text-lg bg-grey-lighter px-1 h-full flex items-center text-purple-dark rounded-tl rounded-bl">search</span>
-            <input v-model="query" class="outline-none text-sm bg-grey-lighter p-2 pl-0 rounded-tr rounded-br text-grey-darker w-1/2" placeholder="Search" type="text" name="vaName"/>
+            <input @keypress="keyPressHandler" v-model="query" class="outline-none text-sm bg-grey-lighter p-2 pl-0 rounded-tr rounded-br text-grey-darker w-1/2" placeholder="Search" type="text" name="vaName"/>
             <button @click="find" class="material-icons focus:outline-none text-lg p-2 outline-none text-purple-dark">send</button>
         </div>
         <ul class="list-reset font-normal text-base flex">
@@ -33,6 +33,10 @@ export default {
         onChangeSearch(e)
         {
             this.query = e
+        },
+        keyPressHandler(e){
+            if(e.key == 'Enter')
+                this.find()
         }
     }
 }
