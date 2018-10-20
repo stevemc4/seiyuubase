@@ -1,6 +1,9 @@
 # Changelog
 Dates are written in UTC+7 (Jakarta & Bangkok)
 
+## 2018/10/20
+* Minor UI Changes
+
 ## 2018/10/10
 * Now search query inputted in home page's search bar will be put in navbar's search bar when search button is clicked
 * Pressing enter key while typing in search bar now functioning as expected
