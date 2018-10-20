@@ -9,7 +9,7 @@ Dates are written in UTC+7 (Jakarta & Bangkok)
 * Pressing enter key while typing in search bar now functioning as expected
 
 ## 2018/10/09
-* Subtle changes on CSS color pallete
+* Subtle changes on CSS color pallette
 * Smaller CSS file!
 
 ## 2018/10/04
