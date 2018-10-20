@@ -1,5 +1,5 @@
 <template>
-    <nav class="fixed pin-t z-20 w-full h-16 p-8 bg-white shadow border-t-4 border-purple flex items-center">
+    <nav :class="{shadow: isScrolled}" class="fixed pin-t z-20 w-full h-16 p-8 bg-white border-t-4 border-purple flex items-center">
         <span class="flex-grow lg:flex-no-grow text-lg font-normal text-grey-darkest">SeiyuuBase</span>
         <div class="hidden ml-4 h-8 flex-grow lg:flex items-center px-4 border-l border-grey-dark">
             <span class="material-icons text-lg bg-grey-lighter px-1 h-full flex items-center text-purple-dark rounded-tl rounded-bl">search</span>
@@ -19,10 +19,18 @@
 export default {
     created(){
         this.$root.$on('changeSearch', this.onChangeSearch)
+        window.addEventListener('scroll', this.setShadow)
     },
     data(){
         return{
-            query: ""
+            query: "",
+            isScrolled: false
+        }
+    },
+    watch: {
+        'window.scrollY': function()
+        {
+            console.log(window.scrollY)
         }
     },
     methods: {
@@ -37,6 +45,12 @@ export default {
         keyPressHandler(e){
             if(e.key == 'Enter')
                 this.find()
+        },
+        setShadow()
+        {
+            if(window.scrollY == 0)
+                this.isScrolled = false
+            else this.isScrolled = true
         }
     }
 }
