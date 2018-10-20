@@ -1,6 +1,6 @@
 <template>
     <div class="p-8">
-        <div v-if="(info.name != undefined)">
+        <div v-if="(!isLoading)">
             <div class="flex flex-col md:flex-row">
                 <img class="w-24 h-24 rounded-full table mx-auto md:inline-block md:mx-0" style="object-fit: cover" :src="info.image"/>
                 <div class="mt-2 md:mt-0 md:ml-4 table mx-auto md:inline-block md:mx-0">
@@ -43,7 +43,7 @@
                 <span class="block font-normal ml-2 text-grey-darker text-lg my-4" v-if="(discography.singles.length == 0 && discography.albums.length == 0)">Not Available</span>
             </ul>
         </div>
-        <div class="w-full h-full" v-if="(info.name == undefined)">
+        <div class="w-full h-full" v-if="(isLoading)">
             <h1 class="text-3xl font-normal text-grey-darker" v-if="(!notFound)">Loading...</h1>
             <div v-else>
                 <h1 class="text-3xl font-normal text-grey-darker">Not found!</h1>
@@ -84,16 +84,19 @@ export default {
         singles: []
       },
       isDiscogsLoaded: false,
-      notFound: false
+      notFound: false,
+      isLoading: true
     } 
   },
   watch: {
       $route (from, to)
       {
+        this.isLoading = true
         this.loadData()
       }
   },
   created() {
+    this.isLoading = true
     this.loadData()
   },
   mounted() {},
@@ -172,6 +175,7 @@ export default {
         } 
         this.info = data 
         document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
+        this.isLoading = false
         this.loadDiscogs(this.info.name.native) 
         } catch (e) {
         console.log(e)
