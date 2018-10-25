@@ -17,10 +17,11 @@ It starts as a random talk with my fellow _weeaboo_ friends about best voice act
 
 * Get anime and character list that features your favorite voice actor
 * Get your favorite voice actor's discography data
+* Compare 2 voice actors and find what anime they share
 
 ## Coming Soon
 
-* Find anime that have your selected voice actors starred in it
+* Nothing at the moment
 
 Inputs and helps are welcome!
 
