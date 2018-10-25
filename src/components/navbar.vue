@@ -8,6 +8,7 @@
         </div>
         <ul class="list-reset font-normal text-base flex">
             <li><router-link :to="'/'" class="p-2 no-underline text-grey-dark hover:text-purple-dark">Home</router-link></li>
+            <li><router-link :to="'/compare'" class="p-2 no-underline text-grey-dark hover:text-purple-dark">Compare</router-link></li>
             <li><router-link :to="'/about'" class="p-2 no-underline text-grey-dark hover:text-purple-dark">About</router-link></li>
             <li><router-link :to="'/changelog'" class="p-2 no-underline text-grey-dark hover:text-purple-dark">Changelog</router-link></li>
             <li><a href="https://github.com/stevemc4/seiyuubase" target="_blank" class="p-2 no-underline text-grey-dark hover:text-purple-dark">GitHub <span class="material-icons text-base align-middle">open_in_new</span></a></li>

@@ -4,6 +4,7 @@ import Index from '@/pages/index'
 import InfoPage from '@/pages/info'
 import About from '@/pages/about'
 import Changelog from '@/pages/changelog'
+import Compare from '@/pages/compare'
 
 Vue.use(Router)
 
@@ -40,6 +41,14 @@ var router = new Router({
       component: Changelog,
       meta: {
         title: "Changelog"
+      }
+    },
+    {
+      path: '/compare',
+      name: 'Compare',
+      component: Compare,
+      meta: {
+        title: "VA Comparison"
       }
     }
   ]
