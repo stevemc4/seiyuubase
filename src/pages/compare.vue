@@ -245,7 +245,7 @@ export default {
                 this.animeList.first = []
                 this.animeList.last = []
             }
-            this.status = 'Can\'t compare with same voice actor!'
+            else this.status = 'Can\'t compare with same voice actor!'
 
         }
         else this.status = 'VA data is empty, did you clicked the "check" button?'
