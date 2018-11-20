@@ -11,7 +11,7 @@
             </div>
             <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
             <ul class="list-reset flex flex-wrap -ml-2">
-                <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in info.characters" :key="item.id">
+                <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in characters" :key="item.id">
                     <div class="bg-transparent shadow rounded-lg flex h-32">
                         <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.coverImage"/>
                         <div class="bg-white relative p-4 w-full rounded-tr-lg rounded-br-lg">
@@ -19,6 +19,19 @@
                             <span class="block font-normal text-sm mt-1 text-grey-darker">as <a :href="item.as.siteUrl" target="_blank" class="no-underline font-bold text-grey-darkest">{{item.as.name.first}} {{item.as.name.last}}</a></span>
                             <span class="block font-normal text-xs absolute pin-b mb-2 text-grey-dark">{{item.season}} {{item.year}}</span>
                         </div>
+                    </div>
+                </li>
+                <li @click="loadMoreCharacters()" class="w-full md:w-1/2 xl:w-1/3 p-2" v-if="graphQlPage.hasNextPage">
+                    <div class="bg-transparent border-2 border-dashed rounded-lg hover:border-purple text-grey-darker hover:text-purple-dark cursor-pointer flex items-center h-32">
+                        <div class="table mx-auto select-none">
+                            <span v-if="!isLoaderLoading" class="flex-grow font-normal flex items-center">
+                                <span class="material-icons mr-2">add</span>
+                                Load More
+                            </span>
+                            <span v-else class="font-normal items-center flex">
+                                Loading...
+                            </span>
+                        </div>    
                     </div>
                 </li>
             </ul>
@@ -79,16 +92,19 @@ var mb = new nodebrainz({
 export default {
   data() {
     return {
-      info: {},
-      discography: {
+    id: 0,
+    info: {},
+    characters: [],
+    discography: {
         albums: [],
         singles: []
-      },
-      isDiscogsLoaded: false,
-      notFound: false,
-      isLoading: true,
-      md: ''
-    } 
+    },
+    isDiscogsLoaded: false,
+    notFound: false,
+    isLoading: true,
+    graphQlPage: {},
+    isLoaderLoading: false
+    }
   },
   watch: {
       $route (from, to)
@@ -107,6 +123,7 @@ export default {
         let query = `
             query ($name: String){
                 Staff(search: $name, sort: FAVOURITES_DESC) {
+                    id
                     name {
                     first
                     last
@@ -143,70 +160,144 @@ export default {
                         siteUrl
                         }
                     }
+                    pageInfo{
+                        total
+                        hasNextPage
+                        currentPage
+                        perPage
+                        lastPage
+                    }
                     }
                 }
             }` 
         try {
-        let result = await client.request(query, {
-            name: this.$route.params.name
-        }) 
-        let characters = [] 
-        result.Staff.characters.edges.forEach(e => {
-            e.media.forEach(m => {
-            let item = {
-                id: m.id,
-                title: m.title,
-                year: m.startDate.year,
-                siteUrl: m.siteUrl,
-                season: m.season,
-                coverImage: m.coverImage.medium,
-                as: {
-                name: e.node.name,
-                siteUrl: e.node.siteUrl
-                }
+            let result = (await client.request(query, {
+                name: this.$route.params.name
+            })).Staff
+            this.id = result.id
+            this.processCharacters(result.characters.edges)
+            let data = {
+                name: result.name,
+                description: result.description,
+                image: result.image.medium,
             } 
-            if (m.format == "TV" || m.format == "MOVIE" || m.format == "TV_SHORT")
-                characters.push(item) 
-            }) 
-        }) 
-        let data = {
-            name: result.Staff.name,
-            description: result.Staff.description,
-            image: result.Staff.image.medium,
-            characters
-        } 
-        this.info = data 
-        document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
-        this.isLoading = false
-        this.loadDiscogs(this.info.name.native) 
+            this.info = data 
+            this.graphQlPage = result.characters.pageInfo
+            document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
+            this.isLoading = false
+            this.loadDiscogs(this.info.name.native) 
         } catch (e) {
-        console.log(e)
-        this.notFound = true
+            console.log(e)
+            this.notFound = true
         }
     },
     loadDiscogs(name) {
-      if (!this.isDiscogsLoaded) {
-        let a = this 
-        mb.search("artist", { artist: name, country: "JP" }, (err, res) => {
-          var id = res.artists[0].id 
-          mb.search(
-            "release-group",
-            { arid: id, artist: res.artists[0].name, primarytype: "album" },
-            (err, res) => {
-              a.discography.albums = res["release-groups"] 
+        try{
+            if (!this.isDiscogsLoaded) {
+                let a = this 
+                mb.search("artist", { artist: name, country: "JP" }, (err, res) => {
+                    var id = res.artists[0].id 
+                    mb.search(
+                        "release-group",
+                        { arid: id, artist: res.artists[0].name, primarytype: "album" },
+                        (err, res) => {
+                        a.discography.albums = res["release-groups"] 
+                        }
+                    ) 
+                    mb.search(
+                        "release-group",
+                        { arid: id, primarytype: "single", limit: 100 },
+                        (err, res) => {
+                        a.discography.singles = res["release-groups"] 
+                        }
+                    ) 
+                }) 
+                this.isDiscogsLoaded = true 
             }
-          ) 
-          mb.search(
-            "release-group",
-            { arid: id, primarytype: "single", limit: 100 },
-            (err, res) => {
-              a.discography.singles = res["release-groups"] 
-            }
-          ) 
-        }) 
-        this.isDiscogsLoaded = true 
-      }
+        }
+        catch(e)
+        {
+            console.log(e)
+        }
     },
+    processCharacters(data){
+        for(let character of data) {
+            for(let media of character.media) {
+                let item = {
+                    id: media.id,
+                    title: media.title,
+                    year: media.startDate.year,
+                    siteUrl: media.siteUrl,
+                    season: media.season,
+                    coverImage: media.coverImage.medium,
+                    as: {
+                        name: character.node.name,
+                        siteUrl: character.node.siteUrl
+                    }
+                }
+                if (media.format == "TV" || media.format == "MOVIE" || media.format == "TV_SHORT")
+                    this.characters.push(item) 
+            } 
+        }
+    },
+    async loadMoreCharacters(){
+        try{
+            this.isLoaderLoading = true
+            let query = `
+            query($id: Int, $page: Int){
+                Staff(id: $id) {
+                    characters(sort: FAVOURITES_DESC, perPage: 24, page: $page) {
+                    edges {
+                        id
+                        media {
+                        title {
+                            english
+                            romaji
+                            native
+                        }
+                        season
+                        startDate {
+                            year
+                        }
+                        coverImage {
+                            medium
+                        }
+                        siteUrl
+                        format
+                        }
+                        node {
+                        name {
+                            first
+                            last
+                        }
+                        siteUrl
+                        }
+                    }
+                    pageInfo {
+                        total
+                        hasNextPage
+                        currentPage
+                        perPage
+                        lastPage
+                    }
+                    }
+                }
+                }
+
+            `
+            let result = (await client.request(query, {
+                id: this.id,
+                page: this.graphQlPage.currentPage + 1
+            })).Staff.characters
+            this.processCharacters(result.edges)
+            this.graphQlPage = result.pageInfo
+            this.isLoaderLoading = false
+            }
+        catch(e)
+        {
+            this.isLoaderLoading = false
+        }
+    }
   },
   computed: {
       renderedMarkdown()
