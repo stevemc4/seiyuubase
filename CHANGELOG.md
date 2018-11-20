@@ -1,6 +1,9 @@
 # Changelog
 Dates are written in UTC+7 (Jakarta & Bangkok)
 
+## 2018/11/20
+* Optimized app size
+
 ## 2018/10/25
 * Compare your favorite voice actors/actresses and find where they both acted with the new "Compare" feature!
 
