@@ -1,8 +1,8 @@
 <template>
     <div class="p-8">
         <h1 class="text-3xl font-normal text-grey-darker">Compare</h1>
-        <div class="flex mt-4">
-            <div class="w-1/2 pr-2">
+        <div class="flex mt-4 flex-col md:flex-row">
+            <div class="w-full md:w-1/2 pr-2">
                 <span class="font-normal text-lg text-grey-darker">1st Voice Actor</span>
                 <div class="flex mt-3">
                     <input placeholder="Try 'Kana Hanazawa'" v-model="firstText" class="flex-grow h-10 p-2 rounded-lg border-2 border-r-0 border-purple outline-none rounded-tr-none rounded-br-none" type="text">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-1/2 pl-2">
+            <div class="w-full md:w-1/2 pl-2 mt-4 md:mt-0">
                 <span class="font-normal text-lg text-grey-darker">2nd Voice Actor</span>
                 <div class="flex mt-3">
                     <input placeholder="Try 'Inori Minase'" v-model="secondText" class="flex-grow h-10 p-2 rounded-lg border-2 border-r-0 border-purple outline-none rounded-tr-none rounded-br-none" type="text">
