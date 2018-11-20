@@ -2,9 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/pages/index'
 import InfoPage from '@/pages/info'
-import About from '@/pages/about'
-import Changelog from '@/pages/changelog'
 import Compare from '@/pages/compare'
+import MarkdownRenderer from '@/pages/markdownRenderer'
 
 Vue.use(Router)
 
@@ -30,17 +29,19 @@ var router = new Router({
     {
       path: '/about',
       name: 'About',
-      component: About,
+      component: MarkdownRenderer,
       meta: {
-        title: "About SeiyuuBase"
+        title: "About SeiyuuBase",
+        fileToRender: 'README'
       }
     },
     {
       path: '/changelog',
       name: 'Changelog',
-      component: Changelog,
+      component: MarkdownRenderer,
       meta: {
-        title: "Changelog"
+        title: "Changelog",
+        fileToRender: 'CHANGELOG'
       }
     },
     {

@@ -6,7 +6,7 @@
                 <div class="mt-2 md:mt-0 md:ml-4 table mx-auto md:inline-block md:mx-0">
                     <h1 class="text-center md:text-left font-normal text-3xl text-grey-darkest">{{`${info.name.first} ${info.name.last}`}}</h1>
                     <span class="text-center md:text-left block font-normal text-lg text-grey-dark">{{info.name.native}}</span>
-                    <md :source="info.description" class="mt-4 md-renderer"/>
+                    <p v-html="renderedMarkdown" class="mt-4 md-renderer leading-none"></p>
                 </div>
             </div>
             <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
@@ -66,16 +66,17 @@
 </template>
 
 <script>
-import { GraphQLClient } from "graphql-request" 
-import nodebrainz from "nodebrainz" 
-import md from "vue-markdown" 
+import { GraphQLClient } from 'graphql-request'
+import nodebrainz from 'nodebrainz'
+import mi from 'markdown-it'
+
+const md = mi({html: true, linkify: true})
 var client = new GraphQLClient("https://graphql.anilist.co") 
 var mb = new nodebrainz({
      userAgent: "seiyuubase/0.0.1" ,
      port: 443
      }) 
 export default {
-  components: { md },
   data() {
     return {
       info: {},
@@ -85,7 +86,8 @@ export default {
       },
       isDiscogsLoaded: false,
       notFound: false,
-      isLoading: true
+      isLoading: true,
+      md: ''
     } 
   },
   watch: {
@@ -204,7 +206,13 @@ export default {
         }) 
         this.isDiscogsLoaded = true 
       }
-    }
+    },
+  },
+  computed: {
+      renderedMarkdown()
+      {
+          return md.render(this.info.description)
+      }
   }
 } 
 </script>

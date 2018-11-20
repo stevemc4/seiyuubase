@@ -24,6 +24,21 @@ body
     @apply no-underline text-purple-dark
 }
 
+.md-renderer p
+{
+    @apply block leading-none
+}
+
+.md-renderer ul li
+{
+    @apply leading-none
+}
+
+
+.md-renderer>*{
+    @apply whitespace-pre-line my-1
+}
+
 .mdr h1, .mdr h2, .mdr h3, .mdr h4, .mdr h5, .mdr h6
 {
     @apply my-4 text-grey-darkest font-normal
