@@ -2,7 +2,7 @@
     <div class="p-8">
         <div v-if="(!isLoading)">
             <div class="flex flex-col md:flex-row">
-                <img class="w-24 h-24 rounded-full table mx-auto md:inline-block md:mx-0" style="object-fit: cover" :src="info.image"/>
+                <img class="w-32 h-32 md:w-24 md:h-24 rounded-full table mx-auto md:inline-block md:mx-0" style="object-fit: cover" :src="info.image"/>
                 <div class="mt-2 md:mt-0 md:ml-4 table mx-auto md:inline-block md:mx-0">
                     <h1 class="text-center md:text-left font-normal text-3xl text-grey-darkest">{{`${info.name.first} ${info.name.last}`}}</h1>
                     <span class="text-center md:text-left block font-normal text-lg text-grey-dark">{{info.name.native}}</span>

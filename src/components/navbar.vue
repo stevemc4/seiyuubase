@@ -1,5 +1,5 @@
 <template>
-    <nav :class="{shadow: isScrolled}" class="fixed pin-t z-20 w-full h-16 p-8 bg-white border-t-4 border-purple flex items-center">
+    <nav :class="{shadow: isScrolled}" class="fixed pin-t z-20 w-full h-16 py-8 md:px-8 px-0 bg-white border-t-4 border-purple flex items-center">
         <span class="hidden md:inline text-lg font-normal text-grey-darkest">SeiyuuBase</span>
         <div class="md:ml-4 h-8 flex-grow flex items-center px-4 md:border-l md:border-grey-dark">
             <span class="material-icons text-lg bg-grey-lighter px-1 h-full flex items-center text-purple-dark rounded-tl rounded-bl">search</span>
@@ -22,6 +22,7 @@ export default {
         this.$root.$on('changeSearch', this.onChangeSearch)
         window.addEventListener('scroll', this.setShadow)
         window.addEventListener('resize', this.setSearchPlaceholder)
+        this.setSearchPlaceholder()
     },
     beforeDestroy()
     {
