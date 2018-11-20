@@ -120,6 +120,8 @@ export default {
   mounted() {},
   methods: {
     async loadData(){
+        this.characters = []
+        this.graphQlPage = {}
         let query = `
             query ($name: String){
                 Staff(search: $name, sort: FAVOURITES_DESC) {
@@ -133,41 +135,6 @@ export default {
                     medium
                     }
                     description
-                    characters(sort: FAVOURITES_DESC, perPage: 24) {
-                    edges {
-                        id
-                        media {
-                        title {
-                            english
-                            romaji
-                            native
-                        }
-                        season
-                        startDate {
-                            year
-                        }
-                        coverImage {
-                            medium
-                        }
-                        siteUrl
-                        format
-                        }
-                        node {
-                        name {
-                            first
-                            last
-                        }
-                        siteUrl
-                        }
-                    }
-                    pageInfo{
-                        total
-                        hasNextPage
-                        currentPage
-                        perPage
-                        lastPage
-                    }
-                    }
                 }
             }` 
         try {
@@ -175,14 +142,13 @@ export default {
                 name: this.$route.params.name
             })).Staff
             this.id = result.id
-            this.processCharacters(result.characters.edges)
+            this.loadMoreCharacters()
             let data = {
                 name: result.name,
                 description: result.description,
                 image: result.image.medium,
             } 
-            this.info = data 
-            this.graphQlPage = result.characters.pageInfo
+            this.info = data
             document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
             this.isLoading = false
             this.loadDiscogs(this.info.name.native) 
@@ -287,7 +253,7 @@ export default {
             `
             let result = (await client.request(query, {
                 id: this.id,
-                page: this.graphQlPage.currentPage + 1
+                page: this.graphQlPage.currentPage + 1 || 1
             })).Staff.characters
             this.processCharacters(result.edges)
             this.graphQlPage = result.pageInfo
