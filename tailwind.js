@@ -56,22 +56,6 @@ let colors = {
   'grey-lightest': '#F3F7F9',
   'white': '#ffffff',
 
-  'blue-darkest': '#12283a',
-  'blue-darker': '#1c3d5a',
-  'blue-dark': '#2779bd',
-  'blue': '#3490dc',
-  'blue-light': '#6cb2eb',
-  'blue-lighter': '#bcdefa',
-  'blue-lightest': '#eff8ff',
-
-  'indigo-darkest': '#191e38',
-  'indigo-darker': '#2f365f',
-  'indigo-dark': '#5661b3',
-  'indigo': '#6574cd',
-  'indigo-light': '#7886d7',
-  'indigo-lighter': '#b2b7ff',
-  'indigo-lightest': '#e6e8ff',
-
   'purple-darkest': '#21183c',
   'purple-darker': '#382b5f',
   'purple-dark': '#794acf',
@@ -119,7 +103,6 @@ module.exports = {
   */
 
   screens: {
-    'sm': '576px',
     'md': '768px',
     'lg': '992px',
     'xl': '1200px',
@@ -249,10 +232,7 @@ module.exports = {
   */
 
   leading: {
-    'none': 1,
-    'tight': 1.25,
-    'normal': 1.5,
-    'loose': 2,
+    'none': 1
   },
 
 
@@ -306,25 +286,6 @@ module.exports = {
 
   backgroundColors: colors,
 
-
-  /*
-  |-----------------------------------------------------------------------------
-  | Background sizes               https://tailwindcss.com/docs/background-size
-  |-----------------------------------------------------------------------------
-  |
-  | Here is where you define your background sizes. We provide some common
-  | values that are useful in most projects, but feel free to add other sizes
-  | that are specific to your project here as well.
-  |
-  | Class name: .bg-{size}
-  |
-  */
-
-  backgroundSize: {
-    'auto': 'auto',
-    'cover': 'cover',
-    'contain': 'contain',
-  },
 
 
   /*
@@ -807,33 +768,33 @@ module.exports = {
   */
 
   modules: {
-    appearance: ['responsive'],
-    backgroundAttachment: ['responsive'],
+    appearance: false,
+    backgroundAttachment: false,
     backgroundColors: ['responsive', 'hover', 'focus'],
-    backgroundPosition: ['responsive'],
-    backgroundRepeat: ['responsive'],
-    backgroundSize: ['responsive'],
+    backgroundPosition: false,
+    backgroundRepeat: false,
+    backgroundSize: false,
     borderCollapse: [],
-    borderColors: ['responsive'],
+    borderColors: [],
     borderRadius: ['responsive'],
-    borderStyle: ['responsive'],
-    borderWidths: ['responsive'],
-    cursor: ['responsive'],
+    borderStyle: [],
+    borderWidths: [],
+    cursor: [],
     display: ['responsive'],
     flexbox: ['responsive'],
     float: ['responsive'],
     fonts: ['responsive'],
     fontWeights: ['responsive'],
     height: ['responsive'],
-    leading: ['responsive'],
-    lists: ['responsive'],
+    leading: [],
+    lists: [],
     margin: ['responsive'],
     maxHeight: ['responsive'],
     maxWidth: ['responsive'],
     minHeight: ['responsive'],
     minWidth: ['responsive'],
     negativeMargin: ['responsive'],
-    opacity: ['responsive'],
+    opacity: false,
     outline: ['focus'],
     overflow: ['responsive'],
     padding: ['responsive'],
@@ -841,8 +802,8 @@ module.exports = {
     position: ['responsive'],
     resize: ['responsive'],
     shadows: ['responsive', 'hover'],
-    svgFill: [],
-    svgStroke: [],
+    svgFill: false,
+    svgStroke: false,
     tableLayout: ['responsive'],
     textAlign: ['responsive'],
     textColors: ['responsive', 'hover'],
@@ -852,9 +813,9 @@ module.exports = {
     userSelect: ['responsive'],
     verticalAlign: ['responsive'],
     visibility: ['responsive'],
-    whitespace: ['responsive'],
+    whitespace: [],
     width: ['responsive'],
-    zIndex: ['responsive'],
+    zIndex: [],
   },
 
 
