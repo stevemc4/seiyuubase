@@ -1,5 +1,5 @@
 # Changelog
-Dates are written in UTC+7 (Jakarta & Bangkok)
+Dates are based on UTC+7 (Jakarta & Bangkok)
 
 ## 2018/11/20
 * Optimized app size
