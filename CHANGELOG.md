@@ -1,6 +1,10 @@
 # Changelog
 Dates are based on UTC+7 (Jakarta & Bangkok)
 
+## 2018/11/28
+* Added favicons
+* Added PWA support
+
 ## 2018/11/20
 * Optimized app size
 * Optimized app responsiveness on small screens
