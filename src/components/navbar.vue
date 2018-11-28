@@ -1,7 +1,10 @@
 <template>
     <nav :class="{shadow: isScrolled}" class="fixed pin-t z-20 w-full h-16 py-8 md:px-8 px-0 bg-white border-t-4 border-purple flex items-center">
-        <span class="hidden md:inline text-lg font-normal text-grey-darkest">SeiyuuBase</span>
-        <div class="md:ml-4 h-8 flex-grow flex items-center px-4 md:border-l md:border-grey-dark">
+        <div class="hidden md:inline-flex text-lg font-normal text-grey-darkest items-center">
+            <img src="@/assets/AppIcon.svg" class="w-8 h-8"/>
+            <span class="ml-3">SeiyuuBase</span>
+        </div>
+        <div class="md:ml-3 h-8 flex-grow flex items-center px-4 md:border-l md:border-grey-dark">
             <span class="material-icons text-lg bg-grey-lighter px-1 h-full flex items-center text-purple-dark rounded-tl rounded-bl">search</span>
             <input @keypress="keyPressHandler" v-model="query" class="outline-none text-sm bg-grey-lighter p-2 pl-0 rounded-tr rounded-br text-grey-darker w-full text-center md:text-left" :placeholder="searchPlaceholder" type="text" name="vaName"/>
             <button @click="find" class="material-icons focus:outline-none text-lg p-2 outline-none text-purple-dark">send</button>
