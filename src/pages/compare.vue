@@ -200,25 +200,23 @@ export default {
             page: currentPage
           })
           this.status = `Processing ${name}'s character data (page ${result.Staff.characters.pageInfo.currentPage} of ${result.Staff.characters.pageInfo.lastPage})`
-          result.Staff.characters.edges.forEach(e => {
-            e.media.forEach(x => {
-              if (
-                x.format == 'TV' ||
-                x.format == 'MOVIE' ||
-                x.format == 'TV_SHORT'
-              )
-                shows.push({
-                  title: x.title,
-                  year: x.startDate.year,
-                  id: x.id,
-                  cover: x.coverImage.medium,
-                  as: {
-                      name: e.node.name,
-                      picture: e.node.image.medium
-                  }
-                })
-            })
-          })
+          for(let characters of result.Staff.characters.edges)
+          {
+            for(let media of characters.media)
+            {
+                if (media.format == 'TV' || media.format == 'MOVIE' || media.format == 'TV_SHORT')
+                    shows.push({
+                        title: media.title,
+                        year: media.startDate.year,
+                        id: media.id,
+                        cover: media.coverImage.medium,
+                        as: {
+                            name: characters.node.name,
+                            picture: characters.node.image.medium
+                        }
+                    })
+            }
+          }
           if (result.Staff.characters.pageInfo.hasNextPage) currentPage++
           else hasNextPage = false
         } catch (e) {
@@ -252,23 +250,25 @@ export default {
     },
     compare()
     {
-        this.animeList.first.forEach((e) => {
-            this.animeList.last.forEach((x) => {
-                if(e.id == x.id)
+        for(let left of this.animeList.first)
+        {
+            for(let right of this.animeList.last)
+            {
+                if(left.id == right.id)
                 {
                     this.compareResult.push({
                         show: {
-                            title: e.title,
-                            cover: e.cover,
-                            year: e.year
+                            title: left.title,
+                            cover: left.cover,
+                            year: left.year
                         },
-                        left: e.as,
-                        right: x.as
+                        left: left.as,
+                        right: right.as
                     })
                     this.status = `Analyzing Shows (Found ${this.compareResult.length} Shows)`
                 }
-            })
-        })
+            }
+        }
     }
   }
 }

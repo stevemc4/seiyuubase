@@ -46,6 +46,7 @@ export default {
     }
   },
   async mounted(){
+    this.topActors = []
     let query = `{
     Page{
       staff(sort: FAVOURITES_DESC){
@@ -59,7 +60,6 @@ export default {
         }
         characters{
           edges{
-            id
             node{
               id
             }
@@ -72,26 +72,21 @@ export default {
     }
   }`
   let data = await graphql.request(query)
-  let temp = []
-  data.Page.staff.forEach((e) => {
+  for(let staff of data.Page.staff)
+  {
     let count = 0
-    e.characters.edges.forEach((j) => {
-      j.media.forEach((x) => {        
-        if (x.format == "TV" || x.format == "MOVIE" || x.format == "TV_SHORT")
-          count++ 
-      })
-    })
+    for(let character of staff.characters.edges)
+      for(let media of character.media)
+        if(media.format == 'TV' || media.format == 'MOVIE' || media.format == 'TV_SHORT') count++
     if(count > 0)
     {
-      temp.push({
-        name: e.name,
-        image: e.image.medium,
-        roleCount: e.characters.edges.length
+      this.topActors.push({
+        name: staff.name,
+        image: staff.image.medium,
+        roleCount: count
       })
     }
-  })
-  this.topActors = temp
-
+  }
   },
   methods: {
     find()
