@@ -124,7 +124,7 @@ export default {
         this.graphQlPage = {}
         let query = `
             query ($name: String){
-                Staff(search: $name, sort: FAVOURITES_DESC) {
+                Staff(search: $name) {
                     id
                     name {
                     first
