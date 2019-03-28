@@ -4,7 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import analytics from 'vue-analytics'
+
 Vue.config.productionTip = false
+
+Vue.use(analytics, {
+  id: 'UA-125118012-2',
+  router,
+  debug: {
+    sendHitTask: process.env.NODE_ENV === 'production'
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
