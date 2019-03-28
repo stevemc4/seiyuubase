@@ -14,6 +14,7 @@
   </div>
   <div class="p-8">
     <span class="font-normal text-2xl text-grey-darkest">Top Actors/Actresses</span>
+    <span class="font-normal block text-lg mt-2 text-grey-darker">According to AniList Favorites</span>
     <span class="block mt-4 font-normal text-xl text-center text-grey-dark" v-if="topActors.length == 0">Loading...</span>
     <ul class="flex list-reset flex-wrap mt-2 -ml-2">
       <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-for="item in topActors" :key="item.name.native">
