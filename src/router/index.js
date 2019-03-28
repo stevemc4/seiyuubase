@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Index from '@/pages/index'
 import Compare from '@/pages/compare'
+import NotFound from '@/pages/NotFound'
 
 const InfoPage = () => import('@/pages/info')
 const MarkdownRenderer = () => import('@/pages/markdownRenderer')
@@ -52,6 +53,18 @@ var router = new Router({
       component: Compare,
       meta: {
         title: "VA Comparison"
+      }
+    },
+    {
+      path: '*',
+      redirect: '/404'
+    },
+    {
+      path: '/404',
+      name: 'NotFound',
+      component: NotFound,
+      meta: {
+        title: "Four-Oh-Four, Not Found"
       }
     }
   ]
