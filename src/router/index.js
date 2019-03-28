@@ -1,13 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Index from '@/pages/index'
-// import InfoPage from '@/pages/info'
-// import Compare from '@/pages/compare'
-// import MarkdownRenderer from '@/pages/markdownRenderer'
 
-const Index = () => import('@/pages/index')
+import Index from '@/pages/index'
+import Compare from '@/pages/compare'
+
 const InfoPage = () => import('@/pages/info')
-const Compare = () => import('@/pages/compare')
 const MarkdownRenderer = () => import('@/pages/markdownRenderer')
 
 Vue.use(Router)
