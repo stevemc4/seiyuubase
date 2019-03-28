@@ -120,7 +120,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 
     new PrerenderSpaPlugin({
       staticDir: path.join(__dirname, '../dist'),
-      routes: [ '/', '/compare'],
+      routes: [ '/', '/compare', '/changelog', '/about', '/404'],
     })
   ]
 })
