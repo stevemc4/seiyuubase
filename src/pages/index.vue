@@ -8,7 +8,7 @@
   </div>
   <div class="w-full rounded-none md:w-1/2 xl:w-1/3 md:-mt-12 h-24 bg-white shadow md:rounded-lg p-4 table mx-auto">
     <div class="flex mt-3">
-      <input @keypress="keyPressHandler" placeholder="Try 'Kana Hanazawa'" v-model="query" class="flex-grow h-10 p-2 rounded-lg border-2 border-r-0 border-purple outline-none rounded-tr-none rounded-br-none" type="text">
+      <input @keypress="keyPressHandler" :placeholder="`Try '${randomNames}'`" v-model="query" class="flex-grow h-10 p-2 rounded-lg border-2 border-r-0 border-purple outline-none rounded-tr-none rounded-br-none" type="text">
       <button @click="find" class="focus:outline-none w-12 h-10 p-2 rounded-tr-lg rounded-br-lg bg-purple text-white material-icons">search</button>
     </div>
   </div>
@@ -98,6 +98,24 @@ export default {
     keyPressHandler(e){
       if(e.key == 'Enter')
         this.find()
+    }
+  },
+  computed: {
+    randomNames(){
+      let names = [
+        'Kana Hanazawa',
+        'Inori Minase',
+        'Ayane Sakura',
+        'Rie Takahashi',
+        'Mamoru Miyano',
+        'Yoshitsugu Matsuoka',
+        'Jun Fukuyama',
+        'Kaito Ishikawa',
+        'Tomokazu Sugita',
+        'Hiroshi Kamiya'
+      ]
+      let number = Math.floor(Math.random() * names.length)
+      return names[number]
     }
   }
 }
