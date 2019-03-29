@@ -49,45 +49,45 @@ export default {
   async mounted(){
     this.topActors = []
     let query = `{
-    Page{
-      staff(sort: FAVOURITES_DESC){
-        name{
-          first
-          last
-          native
-        }
-        image{
-          medium
-        }
-        characters{
-          edges{
-            node{
-              id
-            }
-            media{
-              format
+      Page{
+        staff(sort: FAVOURITES_DESC){
+          name{
+            first
+            last
+            native
+          }
+          image{
+            medium
+          }
+          characters{
+            edges{
+              node{
+                id
+              }
+              media{
+                format
+              }
             }
           }
         }
       }
-    }
-  }`
-  let data = await graphql.request(query)
-  for(let staff of data.Page.staff)
-  {
-    let count = 0
-    for(let character of staff.characters.edges)
-      for(let media of character.media)
-        if(media.format == 'TV' || media.format == 'MOVIE' || media.format == 'TV_SHORT') count++
-    if(count > 0)
+    }`
+    let data = await graphql.request(query)
+    for(let staff of data.Page.staff)
     {
-      this.topActors.push({
-        name: staff.name,
-        image: staff.image.medium,
-        roleCount: count
-      })
+      let count = 0
+      for(let character of staff.characters.edges)
+        for(let media of character.media)
+          if(media.format == 'TV' || media.format == 'MOVIE' || media.format == 'TV_SHORT') count++
+      if(count > 0)
+      {
+        this.topActors.push({
+          name: staff.name,
+          image: staff.image.medium,
+          roleCount: count
+        })
+      }
     }
-  }
   },
   methods: {
     find()
