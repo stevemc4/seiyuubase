@@ -14,7 +14,7 @@
         <div class="md:ml-3 h-8 flex-grow flex items-center px-4 md:border-l md:border-grey-dark">
             <span 
                 class="material-icons text-lg
-                px-1 h-full flex items-center text-purple-dark rounded-tl rounded-bl animate"
+                px-2 h-10 inline-block flex items-center text-purple-dark rounded-tl rounded-bl animate"
                 :class="{
                     'bg-purple-darkest text-white': (!isScrolled && $route.name == 'Index'), 
                     'bg-grey-lighter text-purple-dark': (isScrolled || $route.name != 'Index')
@@ -23,9 +23,9 @@
             </span>
             <input 
                 @keypress="keyPressHandler" 
-                v-model="query" 
-                class="outline-none text-sm animate
-                p-2 pl-0 rounded-tr rounded-br text-grey-darker w-full text-center md:text-left" 
+                v-model="query"
+                class="outline-none text-base animate 
+                p-2 pl-0 h-10 rounded-tr rounded-br text-grey-darker w-full text-center md:text-left" 
                 :class="{
                     'bg-purple-darkest text-white placeholder': (!isScrolled && $route.name == 'Index'), 
                     'bg-grey-lighter text-black': (isScrolled || $route.name != 'Index')
