@@ -11,7 +11,7 @@
             </div>
             <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
             <ul class="list-reset flex flex-wrap -ml-2">
-                <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in characters" :key="item.id">
+                <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-for="item in filteredList" :key="item.id">
                     <div class="bg-transparent shadow rounded-lg flex h-32">
                         <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.coverImage"/>
                         <div class="bg-white relative p-4 w-full rounded-tr-lg rounded-br-lg">
@@ -138,8 +138,8 @@ export default {
             } 
             this.info = data
             document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
-            this.isLoading = false
             this.loadDiscogs(this.info.name.native) 
+            this.isLoading = false
         } catch (e) {
             console.log(e)
             this.notFound = true
@@ -254,9 +254,14 @@ export default {
     }
   },
   computed: {
-      renderedMarkdown()
-      {
+      renderedMarkdown(){
           return md.render(this.info.description)
+      },
+      filteredList(){
+          return this.characters.map((char) => {
+              if(char.title.english != undefined || char.title.romaji != undefined || char.title.native != undefined)
+                return char
+          })
       }
   }
 } 
