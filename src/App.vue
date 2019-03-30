@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="text-black font-sans">
     <navbar/>
     <router-view class="mt-16"/>
     <footer class="mb-16 md:mb-0 p-8">
