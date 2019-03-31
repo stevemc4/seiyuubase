@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 
 import analytics from 'vue-analytics'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
