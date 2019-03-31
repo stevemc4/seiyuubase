@@ -55,10 +55,10 @@ var router = new Router({
         title: "VA Comparison"
       }
     },
-    // {
-    //   path: '*',
-    //   redirect: '/404'
-    // },
+    {
+      path: '*',
+      redirect: '/404'
+    },
     {
       path: '/404',
       name: 'NotFound',
