@@ -72,6 +72,7 @@ var router = new Router({
 
 router.beforeEach((from, to, next) => {
   document.title = from.meta.title + " - SeiyuuBase"
+  window.scrollTo(0,0)
   next()
 })
 
