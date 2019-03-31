@@ -80,22 +80,24 @@ export default {
           }
         }
       }`
+      
       let data = await graphql.request(query)
-      for(let staff of data.Page.staff)
-      {
-        let count = 0
-        for(let character of staff.characters.edges)
-          for(let media of character.media)
-            if(media.format == 'TV' || media.format == 'MOVIE' || media.format == 'TV_SHORT') count++
+      this.topActors = data.Page.staff.reduce((prev, staff) => {
+        let count = staff.characters.edges.map(character => character.media)
+          .reduce((prev, media) => {
+            media.map((item) => prev.push(item.format))
+            return prev
+          }, [])
+          .filter((media) => media == 'TV' || media == 'MOVIE' || media == 'TV_SHORT')
+          .length
         if(count > 0)
-        {
-          this.topActors.push({
+          prev.push({
             name: staff.name,
             image: staff.image.medium,
-            roleCount: count
+            roleCount: count    
           })
-        }
-      }
+        return prev
+      }, [])
       let expiryDate = dateFn.addHours(new Date(), 12)
       let cache = {
         items: this.topActors,
