@@ -1,6 +1,9 @@
 # Changelog
 Dates are based on UTC+7 (Jakarta & Bangkok)
 
+## 2021/01/20
+New Refreshed UI
+
 ## 2018/11/28
 * Added favicons
 * Added PWA support

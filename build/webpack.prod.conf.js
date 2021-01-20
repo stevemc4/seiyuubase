@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const PrerenderSpaPlugin = require('prerender-spa-plugin')
 
 const env = require('../config/prod.env')
 
@@ -111,11 +112,16 @@ const webpackConfig = merge(baseWebpackConfig, {
     // copy custom static assets
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
+        from: path.resolve(__dirname, '../public'),
+        to: config.build.assetsRoot,
         ignore: ['.*']
       }
-    ])
+    ]),
+
+    new PrerenderSpaPlugin({
+      staticDir: path.join(__dirname, '../dist'),
+      routes: [ '/', '/compare', '/changelog', '/about', '/404'],
+    })
   ]
 })
 

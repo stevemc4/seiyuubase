@@ -19,6 +19,11 @@ body
     @apply text-purple-darkest
 }
 
+.md-renderer ul, .md-renderer ol
+{
+    @apply pl-4
+}
+
 .md-renderer a
 {
     @apply no-underline text-purple-dark

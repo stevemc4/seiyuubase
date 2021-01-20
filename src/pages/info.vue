@@ -11,7 +11,7 @@
             </div>
             <span class="block font-normal text-grey-darkest text-2xl my-8">Appears In</span>
             <ul class="list-reset flex flex-wrap -ml-2">
-                <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-if="item.title.english != undefined || item.title.romaji != undefined || item.title.native != undefined" v-for="item in characters" :key="item.id">
+                <li class="w-full md:w-1/2 xl:w-1/3 p-2" v-for="item in filteredList" :key="item.id">
                     <div class="bg-transparent shadow rounded-lg flex h-32">
                         <img style="object-fit: cover" class="rounded-tl-lg rounded-bl-lg h-full w-24" :src="item.coverImage"/>
                         <div class="bg-white relative p-4 w-full rounded-tr-lg rounded-br-lg">
@@ -63,18 +63,6 @@
                 <span class="text-lg mt-1 block font-normal text-grey-dark">If You believe this person exists, try using <strong class="text-grey-darker">different spelling</strong> or <strong class="text-grey-darker">their native name</strong></span>
             </div>
         </div>
-        <span class="mt-8 block text-base font-normal text-grey-darker">Voice actor data provided by <a href="https://anilist.co" class="no-underline text-purple-dark" target="_blank">AniList</a> API, Discography data provided by <a href="https://musicbrainz.org" class="no-underline text-purple-dark" target="_blank">MusicBrainz</a></span>
-        <span class="mt-1 block text-base font-normal text-grey-dark">This site is not affiliated or sponsored by AniList and/or MusicBrainz in any way</span>
-        <span class="mt-2 block text-sm font-normal text-grey-dark">
-            Made by 
-            <a href="http://dhikarizky.ga" class="no-underline text-purple-dark" target="_blank">Dhika Rizky</a> 
-            with <a href="https://vuejs.org" class="no-underline text-purple-dark" target="_blank">Vue</a>, 
-            <a href="https://tailwindcss.com" class="no-underline text-purple-dark" target="_blank">Tailwind</a>, 
-            <a href="https://graphql.org" class="no-underline text-purple-dark" target="_blank">GraphQL</a>, 
-            <a href="https://github.com/prisma/graphql-request" class="no-underline text-purple-dark" target="_blank">graphql-request</a>, 
-            <a href="https://github.com/jbraithwaite/nodebrainz" class="no-underline text-purple-dark" target="_blank">nodebrainz</a>,
-             and my spare time
-        </span>
     </div>
 </template>
 
@@ -124,7 +112,7 @@ export default {
         this.graphQlPage = {}
         let query = `
             query ($name: String){
-                Staff(search: $name, sort: FAVOURITES_DESC) {
+                Staff(search: $name) {
                     id
                     name {
                     first
@@ -150,8 +138,8 @@ export default {
             } 
             this.info = data
             document.title = `${data.name.first} ${data.name.last} - SeiyuuBase`
-            this.isLoading = false
             this.loadDiscogs(this.info.name.native) 
+            this.isLoading = false
         } catch (e) {
             console.log(e)
             this.notFound = true
@@ -266,9 +254,14 @@ export default {
     }
   },
   computed: {
-      renderedMarkdown()
-      {
+      renderedMarkdown(){
           return md.render(this.info.description)
+      },
+      filteredList(){
+          return this.characters.map((char) => {
+              if(char.title.english != undefined || char.title.romaji != undefined || char.title.native != undefined)
+                return char
+          })
       }
   }
 } 

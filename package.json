@@ -1,24 +1,30 @@
 {
   "name": "seiyuubase",
   "version": "1.0.0",
+  "private": true,
   "description": "A site for all your seiyuu needs!",
   "author": "Dhika Rizky <deka_r@outlook.com>",
-  "private": true,
   "scripts": {
+    "build": "node build/build.js",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
-    "start": "npm run dev",
-    "build": "node build/build.js"
+    "start": "npm run dev"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "cssnano": "^4.1.7",
+    "cssnano": "^4.1.10",
+    "date-fns": "^1.30.1",
+    "dotenv": "^7.0.0",
     "graphql-request": "^1.8.2",
     "markdown-it": "^8.4.2",
     "nodebrainz": "^2.1.1",
+    "prerender-spa-plugin": "^3.4.0",
+    "register-service-worker": "^1.6.2",
     "vue": "^2.5.2",
+    "vue-analytics": "^5.16.4",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
+    "@vue/cli-plugin-pwa": "^3.5.1",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -56,13 +62,13 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  }
 }

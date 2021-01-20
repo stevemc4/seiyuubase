@@ -1,13 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Index from '@/pages/index'
-// import InfoPage from '@/pages/info'
-// import Compare from '@/pages/compare'
-// import MarkdownRenderer from '@/pages/markdownRenderer'
 
-const Index = () => import('@/pages/index')
+import Index from '@/pages/index'
+import Compare from '@/pages/compare'
+import NotFound from '@/pages/NotFound'
+
 const InfoPage = () => import('@/pages/info')
-const Compare = () => import('@/pages/compare')
 const MarkdownRenderer = () => import('@/pages/markdownRenderer')
 
 Vue.use(Router)
@@ -56,12 +54,25 @@ var router = new Router({
       meta: {
         title: "VA Comparison"
       }
+    },
+    {
+      path: '*',
+      redirect: '/404'
+    },
+    {
+      path: '/404',
+      name: 'NotFound',
+      component: NotFound,
+      meta: {
+        title: "Four-Oh-Four, Not Found"
+      }
     }
   ]
 })
 
 router.beforeEach((from, to, next) => {
   document.title = from.meta.title + " - SeiyuuBase"
+  window.scrollTo(0,0)
   next()
 })
 
