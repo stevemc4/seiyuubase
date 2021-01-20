@@ -10,7 +10,7 @@
             <div class="ml-2">
               <span class="font-bold">SeiyuuBase, {{new Date().getFullYear()}}.</span>
               made by 
-              <a href="http://dhikarizky.ga" rel="noopener" class="no-underline text-purple-dark" target="_blank">Dhika Rizky</a> 
+              <a href="http://dhikarizky.me" rel="noopener" class="no-underline text-purple-dark" target="_blank">Dhika Rizky</a> 
               with <a href="https://vuejs.org" rel="noopener" class="no-underline text-purple-dark" target="_blank">Vue</a>, 
               <a href="https://tailwindcss.com" rel="noopener" class="no-underline text-purple-dark" target="_blank">Tailwind</a>, 
               <a href="https://graphql.org" rel="noopener" class="no-underline text-purple-dark" target="_blank">GraphQL</a>, 
